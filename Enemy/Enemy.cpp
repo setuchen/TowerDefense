@@ -83,6 +83,10 @@ void Enemy::UpdatePath(const std::vector<std::vector<int>> &mapDistance) {
     path[0] = PlayScene::EndGridPoint;
 }
 void Enemy::Update(float deltaTime) {
+    if(freezeTimer > 0){
+        freezeTimer -= deltaTime;
+        return;
+    }
     // Pre-calculate the velocity.
     float remainSpeed = speed * deltaTime;
     while (remainSpeed != 0) {
