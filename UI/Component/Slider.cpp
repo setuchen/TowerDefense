@@ -15,12 +15,31 @@ Slider::Slider(float x, float y, float w, float h)
 }
 void Slider::Draw() const {
     // TODO HACKATHON-5 (3/4): The slider's component should be drawn here.
+    Bar.Draw();
+    End1.Draw();
+    End2.Draw();
+    ImageButton::Draw();
 }
 void Slider::SetOnValueChangedCallback(std::function<void(float value)> onValueChangedCallback) {
     OnValueChangedCallback = onValueChangedCallback;
 }
 void Slider::SetValue(float value) {
     // TODO HACKATHON-5 (4/4): Set the value of the slider and call the callback.
+    // 限制在 [0, 1] 範圍內
+    value = std::min(std::max(value, 0.0f), 1.0f);
+
+    // 記錄數值
+    this->value = value;
+
+    // 設定滑塊位置
+    // 因為滑塊（ImageButton）是繼承的，所以更新位置來改變滑塊的位置
+    Position.x = Bar.Position.x + Bar.Size.x * value;
+    Position.y = Bar.Position.y + Bar.Size.y / 2;
+
+    // 呼叫音量變更的 callback（如果有設定的話）
+    if (OnValueChangedCallback) {
+        OnValueChangedCallback(value);
+    }
 }
 void Slider::OnMouseDown(int button, int mx, int my) {
     if ((button & 1) && mouseIn)
