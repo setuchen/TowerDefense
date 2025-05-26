@@ -13,6 +13,7 @@
 #include "UI/Component/Label.hpp"
 #include "UI/Component/Slider.hpp"
 
+
 void SettingsScene::Initialize() {
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
@@ -25,11 +26,17 @@ void SettingsScene::Initialize() {
     AddNewControlObject(btn);
     AddNewObject(new Engine::Label("Back", "pirulen.ttf", 48, halfW, halfH * 3 / 2, 0, 0, 0, 255, 0.5, 0.5));
 
+    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", w - 350, 30, 340, 40);
+    btn->SetOnClickCallback(std::bind(&SettingsScene::ScoreboardOnClick, this));
+    AddNewControlObject(btn);
+    AddNewObject(new Engine::Label("Score Board", "pirulen.ttf", 32, w-180, 50, 255, 255, 255, 255, 0.5, 0.5));
+
     Slider *sliderBGM, *sliderSFX;
     sliderBGM = new Slider(40 + halfW - 95, halfH - 50 - 2, 190, 4);
     sliderBGM->SetOnValueChangedCallback(std::bind(&SettingsScene::BGMSlideOnValueChanged, this, std::placeholders::_1));
     AddNewControlObject(sliderBGM);
     AddNewObject(new Engine::Label("BGM: ", "pirulen.ttf", 28, 40 + halfW - 60 - 95, halfH - 50, 255, 255, 255, 255, 0.5, 0.5));
+    
     sliderSFX = new Slider(40 + halfW - 95, halfH + 50 - 2, 190, 4);
     sliderSFX->SetOnValueChangedCallback(std::bind(&SettingsScene::SFXSlideOnValueChanged, this, std::placeholders::_1));
     AddNewControlObject(sliderSFX);
@@ -46,6 +53,9 @@ void SettingsScene::Terminate() {
 }
 void SettingsScene::BackOnClick(int stage) {
     Engine::GameEngine::GetInstance().ChangeScene("start");
+}
+void SettingsScene::ScoreboardOnClick(){
+    Engine::GameEngine::GetInstance().ChangeScene("scoreboard");
 }
 void SettingsScene::BGMSlideOnValueChanged(float value) {
     AudioHelper::ChangeSampleVolume(bgmInstance, value);

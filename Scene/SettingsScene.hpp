@@ -16,6 +16,7 @@ public:
     void BackOnClick(int stage);
     void BGMSlideOnValueChanged(float value);
     void SFXSlideOnValueChanged(float value);
+    void ScoreboardOnClick();
 };
 
 #endif   // SettingsScene_HPP

@@ -74,6 +74,7 @@ public:
     void OnKeyDown(int keyCode) override;
     void Hit();
     int GetMoney() const;
+    int GetLives() const;
     void EarnMoney(int money);
     void ReadMap();
     void ReadEnemyWave();
@@ -82,5 +83,6 @@ public:
     bool CheckSpaceValid(int x, int y);
     std::vector<std::vector<int>> CalculateBFSDistance();
     // void ModifyReadMapTiles();
+    bool shovelMode = false;
 };
 #endif   // PLAYSCENE_HPP
